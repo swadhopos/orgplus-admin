@@ -53,9 +53,10 @@
   * {
     border-color: hsl(var(--border));
   }
-  body {
+  html, body {
     @apply bg-background text-foreground;
     margin: 0;
+    padding: 0;
     min-width: 320px;
     min-height: 100vh;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -64,4 +65,6 @@
 
 #root {
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
