@@ -4,7 +4,11 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
-import { CreateOrganization } from './pages/Organizations';
+import { OrganizationList } from './pages/Organizations/OrganizationList';
+import { CreateOrganization } from './pages/Organizations/CreateOrganization';
+import { NicheList } from './pages/Niches/NicheList';
+import { NicheForm } from './pages/Niches/NicheForm';
+import { Layout } from './components/Layout';
 
 const queryClient = new QueryClient();
 
@@ -54,7 +58,17 @@ function App() {
                 path="/"
                 element={
                   <ProtectedRoute>
-                    <Dashboard />
+                    <Layout>
+                      <Dashboard />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/organizations"
+                element={
+                  <ProtectedRoute>
+                    <OrganizationList />
                   </ProtectedRoute>
                 }
               />
@@ -63,6 +77,30 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <CreateOrganization />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/niches"
+                element={
+                  <ProtectedRoute>
+                    <NicheList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/niches/new"
+                element={
+                  <ProtectedRoute>
+                    <NicheForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/niches/:key"
+                element={
+                  <ProtectedRoute>
+                    <NicheForm />
                   </ProtectedRoute>
                 }
               />

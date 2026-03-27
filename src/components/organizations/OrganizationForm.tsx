@@ -49,6 +49,7 @@ const organizationFormSchema = z.object({
   website: z.string().url('Invalid URL').optional().or(z.literal('')),
   description: z.string().optional(),
   status: z.enum(['active', 'inactive', 'suspended']).default('active'),
+  nicheTypeKey: z.string().min(1, 'Niche type is required'),
   adminEmail: z.string().email('Invalid admin email address'),
   adminPassword: z.string().min(8, 'Password must be at least 8 characters'),
 });
@@ -87,6 +88,7 @@ export const OrganizationForm: React.FC<OrganizationFormProps> = ({
       status: 'active',
       adminEmail: '',
       adminPassword: '',
+      nicheTypeKey: '',
     },
   });
 

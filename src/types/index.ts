@@ -8,7 +8,8 @@ export interface User {
 export interface Organization {
   _id: string;
   name: string;
-  type?: 'housing_society' | 'apartment_complex' | 'gated_community' | 'cooperative_society' | 'church' | 'mahallu' | 'temple' | 'other';
+  nicheTypeKey: string;
+  type?: string; 
   registrationNumber?: string;
   establishedDate?: string;
   totalUnits?: number;
@@ -23,6 +24,9 @@ export interface Organization {
   website?: string;
   description?: string;
   status: 'active' | 'inactive' | 'suspended';
+  subtype?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
   createdAt: string;
   updatedAt: string;
   createdByUserId: string;
@@ -31,7 +35,7 @@ export interface Organization {
 
 export interface CreateOrganizationData {
   name: string;
-  type?: 'housing_society' | 'apartment_complex' | 'gated_community' | 'cooperative_society' | 'church' | 'mahallu' | 'temple' | 'other';
+  nicheTypeKey: string;
   registrationNumber?: string;
   establishedDate?: string;
   totalUnits?: number;
@@ -46,6 +50,9 @@ export interface CreateOrganizationData {
   website?: string;
   description?: string;
   status?: 'active' | 'inactive' | 'suspended';
+  subtype?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
   adminEmail: string;
   adminPassword: string;
 }
