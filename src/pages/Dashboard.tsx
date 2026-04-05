@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '../contexts/AuthContext';
 import { apiClient } from '../lib/api';
 import { Organization, ApiResponse } from '../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -11,12 +12,21 @@ import {
   PlusCircle, 
   ArrowRight,
   ShieldCheck,
-  Activity
+  Activity,
+  UserCircle
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  };
 
   const { data: orgsData, isLoading: orgsLoading } = useQuery<ApiResponse<Organization[]>>({
     queryKey: ['organizations-summary'],
@@ -57,14 +67,26 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold flex items-center text-gray-900 tracking-tight">
-          <div className="h-10 w-10 rounded-xl bg-indigo-50 flex items-center justify-center mr-4 border border-indigo-100">
-            <Activity className="h-6 w-6 text-indigo-600" />
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold flex items-center text-gray-900 tracking-tight">
+            <div className="h-10 w-10 rounded-xl bg-indigo-50 flex items-center justify-center mr-4 border border-indigo-100">
+              <Activity className="h-6 w-6 text-indigo-600" />
+            </div>
+            {getGreeting()}, {user?.email?.split('@')[0]}!
+          </h1>
+          <p className="text-gray-500 mt-2 font-medium">Welcome back to the OrgPlus Super Admin portal. System metrics are synchronized.</p>
+        </div>
+
+        <div className="hidden md:flex items-center gap-4">
+          <div className="flex flex-col items-end text-right">
+            <span className="text-sm font-semibold tracking-tight text-gray-900">{user?.email?.split('@')[0]}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600 opacity-70">Super Admin</span>
           </div>
-          System Overview
-        </h1>
-        <p className="text-gray-500 mt-2 font-medium">Welcome to the OrgPlus Super Admin portal. Monitor and manage the ecosystem.</p>
+          <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center group hover:bg-indigo-100 transition-all duration-300 shadow-sm">
+            <UserCircle className="h-7 w-7 text-indigo-600 opacity-80 group-hover:opacity-100 transition-all duration-300" />
+          </div>
+        </div>
       </div>
 
       {/* Stats Grid */}
